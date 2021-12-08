@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Transfer.Data\Transfer.Data.csproj" />
+    <ProjectReference Include="..\Transfer.Domain\Transfer.Domain.csproj" />
+    <ProjectReference Include="..\Transfer.RemoteServices\Transfer.RemoteServices.csproj" />
+  </ItemGroup>
+
+</Project>
