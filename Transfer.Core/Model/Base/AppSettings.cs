@@ -23,5 +23,6 @@ namespace Transfer.Core.Model.Base
         public string PaymentPassword { get; set; }
         
         public bool MockRemoteEnable { get; set; }
+        public string KaraFarainURL { get; set; }
     }
 }
