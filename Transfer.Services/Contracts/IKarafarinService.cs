@@ -14,7 +14,8 @@ namespace Transfer.Services.Contracts
         string GetTraceSatnaOutgoingTransfer(KarafarinGetTraceSatnaOutgoingTransferRequestVM getTraceSatna);
         string GetStatementByDate(KarafarinGetStatementByDateRequestVM getStatement);
         string GetAccountNumber(string iban);
-
+        string GetClientInfoList(KarafarinGetClientInfoListRequestVM getClient);
+        string GetOwners(string accountNumber);
 
 
     }

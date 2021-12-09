@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Nancy.Json;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +29,7 @@ namespace Transfer.Services
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
 
         }
         public string GetAchOutgoingTransfer(KarafarinGetAchOutgoingTransferRequestVM getAchOutgoing)
@@ -42,7 +43,7 @@ namespace Transfer.Services
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
         public string GetTraceLocalFundTransfer(KarafarinGetTraceLocalFundTransferRequestVM getTraceLocal)
         {
@@ -54,7 +55,7 @@ namespace Transfer.Services
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
         public string GetTraceAchOutgoingTransfer(KarafarinGetTraceAchOutgoingTransferRequestVM getTraceAchOutgoing)
         {
@@ -66,7 +67,7 @@ namespace Transfer.Services
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
 
         public string GetTraceSatnaOutgoingTransfer(KarafarinGetTraceSatnaOutgoingTransferRequestVM getTraceSatna)
@@ -79,7 +80,7 @@ namespace Transfer.Services
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
 
         public string GetSatnaOutgoingTransferValues(KarafarinGetSatnaOutgoingTransferValuesRequestVM getSatanOutgoing)
@@ -93,7 +94,7 @@ namespace Transfer.Services
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
         public string GetStatementByDate(KarafarinGetStatementByDateRequestVM getStatement)
         {
@@ -103,7 +104,7 @@ namespace Transfer.Services
             request.AddHeader("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWVyYSIsImlwIjoiNS4yMDEuMTc5LjIzMiIsInByZWZlcnJlZF91c2VybmFtZSI6InZpZXJhIiwiZXhwIjoxNjM4OTcwNzc5LCJpYXQiOjE2Mzg5Njg5Nzl9.Nn9oc_3kXiPwHdrEhnGm5nbiw65lBKxx-C4WOJFJ5yhM9byOBrdl48GZ6QYaiaD2hOa09JZx1qV3OgzQ5SF23A");
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
         public string GetStatementByCount(KarafarinGetStatementByCountRequestVM getStatment)
         {
@@ -112,7 +113,7 @@ namespace Transfer.Services
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
-            return response;
+            return response.Content;
         }
         public string GetAccountNumber(string iban)
         {
@@ -121,6 +122,7 @@ namespace Transfer.Services
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
+            return response.Content;
         }
         public string GetClientInfoList(KarafarinGetClientInfoListRequestVM getClient)
         {
@@ -129,7 +131,18 @@ namespace Transfer.Services
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
+            return response.Content;
         }
+        public string GetOwners(string accountNumber)
+        {
+            var client = new RestClient(_appSettings.KaraFarainURL+ "/account/"+accountNumber+"/owners/v1");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            Console.WriteLine(response.Content);
+            return response.Content;
+        }
+
 
     }
 }
