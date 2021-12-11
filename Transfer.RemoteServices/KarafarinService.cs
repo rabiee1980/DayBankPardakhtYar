@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 using Transfer.Core.Model.Base;
 using Transfer.Domain.DTOs.Request;
-using Transfer.Services.Contracts;
+using Transfer.RemoteServices.Contracts;
 
 
-namespace Transfer.Services
+namespace Transfer.RemoteServices
 {
     public class KarafarinService : IKarafarinService
     {
@@ -30,7 +30,6 @@ namespace Transfer.Services
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
             return response.Content;
-
         }
         public string GetAchOutgoingTransfer(KarafarinGetAchOutgoingTransferRequestVM getAchOutgoing)
         {
@@ -138,6 +137,17 @@ namespace Transfer.Services
             var client = new RestClient(_appSettings.KaraFarainURL+ "/account/"+accountNumber+"/owners/v1");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            Console.WriteLine(response.Content);
+            return response.Content;
+        }
+        public string CheckCompanionship(string iban)
+        {
+            var client = new RestClient(_appSettings.KaraFarainURL+ "/account/companionship/iban/"+iban+"/v1");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2aWVyYSIsImlwIjoiNS4yMDEuMTc5LjIzMiIsInByZWZlcnJlZF91c2VybmFtZSI6InZpZXJhIiwiZXhwIjoxNjM5MjAyMzM1LCJpYXQiOjE2MzkyMDA1MzV9.dTfzvIZMupN7eDPYZTOjuBiwTtRVRu0qREg77ENY-pBpypfDmnTDDRfpAUgS8xCn2tXEXtGA0IZKryhUv9IDXg");
+            request.AddHeader("Cookie", "cookiesession1=511235AE1X0I0HKI0A1CJ38EUK2H700B");
             IRestResponse response = client.Execute(request);
             Console.WriteLine(response.Content);
             return response.Content;

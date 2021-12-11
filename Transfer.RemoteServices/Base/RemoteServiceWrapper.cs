@@ -11,7 +11,8 @@ namespace Transfer.RemoteServices.Base
     {
         private IRepositoryWrapper _repository;
         private readonly IOptions<AppSettings> _appSettings;                
-        public IYaghutPaymentRemoteService YaghutPaymentRemoteService => new YaghutPaymentRemoteService(_appSettings);     
+        public IYaghutPaymentRemoteService YaghutPaymentRemoteService => new YaghutPaymentRemoteService(_appSettings);
+        public IKarafarinService karafarinService => new KarafarinService(_appSettings);
         public RemoteServiceWrapper(IRepositoryWrapper repository,IOptions<AppSettings> appSettings)
         {
             _repository = repository;

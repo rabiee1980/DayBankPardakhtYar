@@ -3,7 +3,9 @@
 namespace Transfer.RemoteServices.Base
 {
     public interface IRemoteServiceWrapper
-    {       
-        IYaghutPaymentRemoteService YaghutPaymentRemoteService { get; }     
+    {
+        IYaghutPaymentRemoteService YaghutPaymentRemoteService { get; }
+        IKarafarinService karafarinService { get; }
+
     }
 }

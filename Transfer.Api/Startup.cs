@@ -18,6 +18,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.OpenApi.Models;
+using Transfer.Core.Helpers;
+using System.Net;
 
 namespace Transfer.Api
 {
@@ -35,9 +38,39 @@ namespace Transfer.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transfer", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
+            });
             //var xz = SecurityHelpers.DecryptString(Configuration["ConnectionString:DB"], "NarvinPay");
             //services.AddDbContext<NarvinPay_DBContext>(options => options.UseSqlServer(xz));
             services.AddDbContext<TSS_DBContext>(options => options.UseSqlServer(Configuration["ConnectionString:DB"]));
+            ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             services.AddControllers();
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
@@ -67,8 +100,6 @@ namespace Transfer.Api
                     ClockSkew = TimeSpan.Zero
                 };
             });
-
-
             //services.Configure<ApiBehaviorOptions>(options =>
             //{
             //    options.InvalidModelStateResponseFactory = ctx => new ValidationProblemDetailsResult();
@@ -89,6 +120,8 @@ namespace Transfer.Api
             services.AddScoped<IRemoteServiceWrapper, RemoteServiceWrapper>();
             services.AddScoped<IServiceWrapper, ServiceWrapper>();
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<AppSettings>();
+
 
         }
 
@@ -127,6 +160,11 @@ namespace Transfer.Api
             {
                 endpoints.MapControllers();
             });
+            app.UseSwagger(c =>
+            {
+                c.PreSerializeFilters.Add((swaggerDoc, httpReq) => httpReq.Scheme = httpReq.Host.Value);
+            });
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transfer v1"));
         }
     }
 }

@@ -677,7 +677,7 @@ namespace Transfer.Api.Controllers
                                                           @""",""extraData"":""" + extraData + @"""}");
                                         }
                                     }
-                                    catch (Exception e)
+                                    catch (Exception )
                                     {
                                         isValid = false;
                                         errorCode = 5;
@@ -1451,7 +1451,7 @@ namespace Transfer.Api.Controllers
                     _service.Transactions.UpdateTransferStatus(item.Id, item.ReferenceId, transferStatusId, achTransferBeans[0].status.ToString(), achTransferBeans[0].acceptable, achTransferBeans[0].cancelable, achTransferBeans[0].resumeable, achTransferBeans[0].suspendable);
 
                 }
-                catch (Exception ex)
+                catch (Exception )
                 {
 
                 }

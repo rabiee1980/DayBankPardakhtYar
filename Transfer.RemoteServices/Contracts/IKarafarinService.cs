@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Transfer.Domain.DTOs.Request;
 
-namespace Transfer.Services.Contracts
+namespace Transfer.RemoteServices.Contracts
 {
     public interface IKarafarinService
     {
@@ -16,6 +16,7 @@ namespace Transfer.Services.Contracts
         string GetAccountNumber(string iban);
         string GetClientInfoList(KarafarinGetClientInfoListRequestVM getClient);
         string GetOwners(string accountNumber);
+        string CheckCompanionship(string iban);
 
 
     }
